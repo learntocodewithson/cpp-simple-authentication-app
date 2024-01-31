@@ -23,9 +23,14 @@ class SimpleAuthentication {
   }
 
   void create(){
-    ofstream Users("users.csv");
-    Users << email << "," << password;
-    Users.close();
+    ofstream Users("users.csv", ios::app);
+    if(Users.is_open()){
+      Users << email << "," << password << endl;
+      Users.close();
+      cout << endl << email << " has been successfully registered." << endl;
+    }else{
+      cerr << "Unable to open the file." << endl;
+    }
   }
 
   bool login(){
@@ -40,7 +45,7 @@ class SimpleAuthentication {
       getline(ss, _password);
 
       if(email == _email && password == _password){
-        cout << "Login successfully";
+        cout << endl << "Login successfully";
         found = 1;
         break;
       }
